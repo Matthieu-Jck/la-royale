@@ -1,0 +1,1187 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>Accompagnement La Royale</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap">
+<style>
+body { margin: 0; }
+[hidden] { display: none !important; }
+/* Mise en page : rapport de conseil sobre, une colonne de lecture (~65 car.) qui s'élargit pour les tableaux, les cartes et l'estimation.
+   Thème clair uniquement, comme un rapport imprimé : texte foncé sur fond clair ; le bleu est réservé aux repères et aux chiffres clés. */
+:root {
+  color-scheme: light;
+  --bg: #f5f6f8;
+  --surface: #ffffff;
+  --ink: #14213a;
+  --muted: #5a6478;
+  --line: #dde1e7;
+  --blue: #1f4e8c;
+  --tint: #eef2f8;
+  --gain: #1d7a4b;
+
+  --f-sans: "IBM Plex Sans", "Helvetica Neue", Arial, sans-serif;
+
+  --s-xs: .8125rem;
+  --s-sm: .9375rem;
+  --s-md: 1.0625rem;
+  --s-lg: 1.1875rem;
+  --s-xl: clamp(1.5rem, 1.2rem + 1.4vw, 2rem);
+  --s-2xl: clamp(1.9rem, 1.4rem + 2.2vw, 2.6rem);
+}
+
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--f-sans);
+  font-size: var(--s-md);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+.wrap {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 32px 64px;
+  display: grid;
+  gap: 80px;
+}
+h1, h2, h3 { margin: 0; text-wrap: balance; font-weight: 600; }
+h1 { font-size: var(--s-2xl); line-height: 1.15; letter-spacing: -.015em; }
+h2 { font-size: var(--s-xl); line-height: 1.2; letter-spacing: -.01em; }
+h3 { font-size: var(--s-lg); line-height: 1.3; }
+p { margin: 0; }
+ul { margin: 0; padding: 0; }
+a { color: inherit; }
+:focus-visible { outline: 2px solid var(--blue); outline-offset: 3px; }
+.num { font-variant-numeric: tabular-nums; }
+.label {
+  font-size: .75rem;
+  font-weight: 600;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.eyebrow {
+  font-size: .75rem;
+  font-weight: 600;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--blue);
+}
+.section { display: grid; gap: 28px; }
+.section-head { display: grid; gap: 10px; max-width: 46rem; }
+.section-head p { color: var(--muted); max-width: 65ch; }
+.prose { display: grid; gap: 14px; max-width: 65ch; }
+.source { font-size: var(--s-xs); color: var(--muted); }
+
+/* ---------- Ouverture ---------- */
+.hero { display: grid; gap: 28px; }
+.masthead {
+  display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 6px 24px;
+  padding-bottom: 14px;
+  border-bottom: 2px solid var(--ink);
+}
+.mast-id { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 14px; }
+.mast-name { font-size: 1.25rem; font-weight: 700; letter-spacing: .02em; text-transform: uppercase; }
+.mast-meta, .mast-date { font-size: var(--s-sm); color: var(--muted); }
+.hero-text { display: grid; gap: 16px; max-width: 48rem; padding-top: 8px; }
+.lead { font-size: var(--s-lg); line-height: 1.55; color: var(--muted); max-width: 62ch; }
+.stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+.stat { padding: 16px 16px 14px 0; display: grid; gap: 2px; }
+.stat + .stat { padding-left: 18px; border-left: 1px solid var(--line); }
+.stat-value { font-size: clamp(1.8rem, 1.4rem + 1.6vw, 2.4rem); font-weight: 600; line-height: 1.05; color: var(--blue); font-variant-numeric: tabular-nums; }
+.stat-label { font-size: var(--s-sm); color: var(--muted); line-height: 1.35; }
+.byline { font-size: var(--s-sm); color: var(--muted); }
+.byline strong { color: var(--ink); font-weight: 600; }
+
+/* ---------- Méthode ---------- */
+.principles { list-style: none; display: grid; grid-template-columns: minmax(0, 1fr); gap: 0; border-top: 1px solid var(--line); counter-reset: pr; padding: 0; margin: 0; }
+.principles li { counter-increment: pr; display: grid; grid-template-columns: 2rem minmax(0, 1fr); gap: 12px; padding: 14px 0; border-bottom: 1px solid var(--line); }
+.principles li::before { content: counter(pr); font-weight: 600; color: var(--blue); font-variant-numeric: tabular-nums; }
+.principles strong { font-weight: 600; }
+.principles span { color: var(--muted); }
+
+/* ---------- Profil ---------- */
+.profile { background: var(--surface); border: 1px solid var(--line); border-radius: 4px; }
+.prow { display: grid; grid-template-columns: minmax(0, 1fr); gap: 6px; padding: 16px 20px; border-bottom: 1px solid var(--line); }
+.prow:last-child { border-bottom: 0; }
+.prow.head { display: none; }
+.p-label { font-size: .75rem; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+.p-fact { font-weight: 500; }
+.p-read { font-size: var(--s-sm); color: var(--muted); }
+
+/* ---------- Domaines ---------- */
+.domains { display: grid; grid-template-columns: minmax(0, 1fr); gap: 16px; }
+.domain {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  padding: 22px 22px 20px;
+  display: grid;
+  gap: 12px;
+  align-content: start;
+}
+.domain-top { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 6px 12px; }
+.domain-who { font-size: .75rem; color: var(--muted); }
+.domain-pitch { color: var(--muted); font-size: var(--s-sm); }
+.domain ul { list-style: none; display: grid; gap: 8px; font-size: var(--s-sm); }
+.domain li { position: relative; padding-left: 16px; }
+.domain li::before { content: ""; position: absolute; left: 0; top: .62em; width: 6px; height: 6px; background: var(--blue); }
+.meters { display: flex; flex-wrap: wrap; gap: 6px 18px; padding-top: 12px; border-top: 1px solid var(--line); font-size: .75rem; color: var(--muted); }
+.meter { display: inline-flex; align-items: center; gap: 8px; }
+.dots { display: inline-flex; gap: 3px; }
+.dots i { width: 14px; height: 4px; background: var(--line); }
+.dots i.on { background: var(--blue); }
+
+/* ---------- Estimation ---------- */
+.sim { display: grid; grid-template-columns: minmax(0, 1fr); gap: 24px; align-items: start; }
+.controls {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  padding: 22px;
+  display: grid;
+  gap: 22px;
+}
+.ca-box { display: grid; gap: 8px; padding-bottom: 20px; border-bottom: 1px solid var(--line); }
+.ca-value { font-size: 1.75rem; font-weight: 600; line-height: 1.1; font-variant-numeric: tabular-nums; }
+.lever { display: grid; gap: 6px; }
+.lever-head { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; }
+.lever-head label, .ca-box label { font-weight: 600; }
+.lever-head output { font-weight: 600; font-size: var(--s-sm); color: var(--blue); white-space: nowrap; font-variant-numeric: tabular-nums; }
+.lever-note { font-size: var(--s-xs); color: var(--muted); line-height: 1.45; }
+input[type="range"] { width: 100%; accent-color: var(--blue); margin: 4px 0; }
+.btn {
+  justify-self: start;
+  font: inherit;
+  font-size: var(--s-sm);
+  padding: 7px 14px;
+  border-radius: 4px;
+  border: 1px solid var(--line);
+  background: transparent;
+  color: var(--ink);
+  cursor: pointer;
+}
+.btn:hover { border-color: var(--blue); color: var(--blue); }
+.sim-sticky {
+  position: sticky;
+  bottom: calc(env(safe-area-inset-bottom, 0px) + 8px);
+  display: flex; justify-content: space-between; align-items: baseline; gap: 12px;
+  padding: 12px 16px;
+  margin: 0 -8px -8px;
+  background: var(--surface);
+  color: var(--ink);
+  font-size: var(--s-sm);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  box-shadow: 0 6px 18px rgba(10, 20, 40, .14);
+}
+.sim-sticky strong { font-size: 1.1rem; color: var(--blue); font-variant-numeric: tabular-nums; }
+
+.summary-holder { display: grid; gap: 12px; }
+.summary { background: var(--surface); border: 1px solid var(--line); border-radius: 4px; padding: 20px 22px; display: grid; gap: 4px; }
+.summary-head { display: grid; gap: 2px; padding-bottom: 10px; }
+.summary-sub { font-size: var(--s-xs); color: var(--muted); }
+.s-rows { margin: 0; display: grid; }
+.s-row { display: flex; justify-content: space-between; gap: 12px; padding: 7px 0; border-bottom: 1px solid var(--line); font-size: var(--s-sm); }
+.s-row dt { color: var(--muted); }
+.s-row dd { margin: 0; font-weight: 500; white-space: nowrap; font-variant-numeric: tabular-nums; }
+.s-row.strong dt, .s-row.strong dd { color: var(--ink); font-weight: 600; }
+.s-total { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; padding: 14px 0 12px; border-bottom: 2px solid var(--ink); }
+.s-total span { font-weight: 600; }
+.s-total strong { font-size: 1.6rem; font-weight: 600; color: var(--blue); font-variant-numeric: tabular-nums; }
+.summary-foot { font-size: var(--s-xs); color: var(--muted); }
+
+/* ---------- Valeur ---------- */
+.criteria { list-style: none; display: grid; grid-template-columns: minmax(0, 1fr); gap: 0; counter-reset: cr; border-top: 1px solid var(--line); padding: 0; margin: 0; }
+.criteria li { counter-increment: cr; display: grid; grid-template-columns: 2rem minmax(0, 1fr); gap: 4px 12px; padding: 16px 0; border-bottom: 1px solid var(--line); }
+.criteria li::before { content: counter(cr); grid-row: span 2; font-size: var(--s-lg); font-weight: 600; line-height: 1.3; color: var(--blue); }
+.criteria h3 { font-size: var(--s-md); }
+.criteria p { font-size: var(--s-sm); color: var(--muted); max-width: 72ch; }
+.resale { display: grid; grid-template-columns: minmax(0, 1fr); gap: 24px; align-items: start; }
+.table-scroll { overflow-x: auto; }
+table.val { width: 100%; border-collapse: collapse; font-size: var(--s-sm); background: var(--surface); border: 1px solid var(--line); }
+table.val th, table.val td { padding: 11px 14px; text-align: right; border-bottom: 1px solid var(--line); font-variant-numeric: tabular-nums; }
+table.val th:first-child, table.val td:first-child { text-align: left; }
+table.val thead th { font-weight: 600; font-size: .72rem; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+table.val tbody tr:last-child td { border-bottom: 0; }
+table.val td.big { font-weight: 600; color: var(--gain); }
+.caption { font-size: var(--s-xs); color: var(--muted); margin-top: 8px; }
+
+/* ---------- Déroulement ---------- */
+.steps { list-style: none; display: grid; grid-template-columns: minmax(0, 1fr); gap: 0; counter-reset: step; border-top: 1px solid var(--line); padding: 0; margin: 0; }
+.step { counter-increment: step; display: grid; grid-template-columns: 2.6rem minmax(0, 1fr); gap: 2px 14px; padding: 18px 0; border-bottom: 1px solid var(--line); }
+.step::before { content: counter(step); grid-row: span 3; font-size: 1.6rem; font-weight: 600; line-height: 1.1; color: var(--blue); }
+.step-when { font-size: .72rem; font-weight: 600; color: var(--muted); letter-spacing: .06em; text-transform: uppercase; }
+.step h3 { font-size: var(--s-md); }
+.step p { color: var(--muted); font-size: var(--s-sm); max-width: 60ch; }
+.horizon { display: grid; grid-template-columns: minmax(0, 1fr); gap: 16px; }
+.horizon > div { display: grid; gap: 8px; align-content: start; padding: 18px 20px; border-radius: 4px; background: var(--surface); border: 1px solid var(--line); }
+.horizon h3 { font-size: var(--s-md); }
+.horizon ul { list-style: none; display: grid; gap: 6px; font-size: var(--s-sm); color: var(--muted); }
+
+/* ---------- Données ---------- */
+.tiers { display: grid; grid-template-columns: minmax(0, 1fr); gap: 16px; }
+.tier { background: var(--surface); border: 1px solid var(--line); border-radius: 4px; padding: 20px 22px; display: grid; gap: 14px; align-content: start; }
+.tier-head { display: grid; gap: 2px; }
+.tier-time { font-size: var(--s-lg); font-weight: 600; line-height: 1.2; }
+.tier-sub { font-size: var(--s-xs); color: var(--muted); }
+.tier ul { list-style: none; display: grid; gap: 12px; }
+.doc { display: grid; grid-template-columns: 18px minmax(0, 1fr); gap: 10px; font-size: var(--s-sm); line-height: 1.45; cursor: pointer; }
+.doc input { width: 16px; height: 16px; margin: 2px 0 0; accent-color: var(--blue); cursor: pointer; }
+.doc:hover .doc-text { color: var(--blue); }
+.doc input:checked + .doc-text { font-weight: 500; }
+.unlock { display: block; color: var(--muted); font-size: var(--s-xs); margin-top: 2px; }
+.privacy { display: grid; gap: 10px; padding: 20px 22px; background: var(--surface); border: 1px solid var(--line); border-radius: 4px; max-width: 52rem; }
+.privacy h3 { font-size: var(--s-md); }
+.ticks { list-style: none; display: grid; gap: 8px; font-size: var(--s-sm); }
+.ticks li { position: relative; padding-left: 16px; }
+.ticks li::before { content: ""; position: absolute; left: 0; top: .62em; width: 6px; height: 6px; background: var(--blue); }
+
+/* ---------- Conditions ---------- */
+.deal { display: grid; grid-template-columns: minmax(0, 1fr); gap: 0; background: var(--surface); border: 1px solid var(--line); border-radius: 4px; }
+.deal > div { padding: 22px 22px 24px; display: grid; gap: 6px; align-content: start; }
+.deal > div + div { border-top: 1px solid var(--line); }
+.deal-k { font-size: .72rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+.deal-v { font-size: 1.6rem; font-weight: 600; line-height: 1.2; color: var(--blue); }
+.deal p { font-size: var(--s-sm); color: var(--muted); }
+
+/* ---------- Équipe ---------- */
+.team { display: grid; grid-template-columns: minmax(0, 1fr); gap: 16px; }
+.person { display: grid; grid-template-columns: 48px minmax(0, 1fr); gap: 2px 14px; align-items: start; padding: 20px; background: var(--surface); border: 1px solid var(--line); border-radius: 4px; }
+.avatar {
+  grid-row: span 3;
+  width: 48px; height: 48px;
+  border-radius: 50%;
+  display: grid; place-items: center;
+  font-weight: 600;
+  font-size: 1rem;
+  background: var(--tint);
+  color: var(--blue);
+}
+.person h3 { font-size: var(--s-md); }
+.person-role { font-size: var(--s-xs); color: var(--blue); font-weight: 500; }
+.person p { font-size: var(--s-sm); color: var(--muted); }
+
+/* ---------- Fin ---------- */
+.closing { display: grid; gap: 14px; padding: 28px 24px; border-radius: 4px; background: var(--surface); border: 1px solid var(--line); }
+.closing p { max-width: 62ch; }
+.sign { font-weight: 600; }
+footer { display: grid; gap: 10px; font-size: var(--s-xs); color: var(--muted); border-top: 1px solid var(--line); padding-top: 20px; }
+footer ul { padding-left: 18px; display: grid; gap: 4px; }
+footer a { color: var(--muted); word-break: break-word; }
+
+/* ---------- Navigation ---------- */
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 30; background: var(--surface); }
+.topnav { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20; background: var(--surface); border-bottom: 1px solid var(--line); }
+.topnav-in {
+  max-width: 1080px; margin: 0 auto;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  display: flex; align-items: center; gap: 16px; min-height: 48px;
+}
+.topnav-brand { flex: none; font-size: .875rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; text-decoration: none; }
+.topnav-links { position: relative; display: flex; gap: 2px; margin-left: auto; min-width: 0; overflow-x: auto; scrollbar-width: none; }
+.topnav-links::-webkit-scrollbar { display: none; }
+.topnav-links a { flex: none; padding: 6px 10px; border-radius: 4px; font-size: .875rem; color: var(--muted); text-decoration: none; white-space: nowrap; }
+.topnav-links a:hover { color: var(--ink); }
+.topnav-links a[aria-current="true"] { color: var(--blue); background: var(--tint); font-weight: 500; }
+.hero, .section { scroll-margin-top: 64px; }
+.arrow-link { justify-self: start; font-size: var(--s-sm); font-weight: 500; color: var(--blue); text-decoration: none; }
+.arrow-link::after { content: " →"; }
+.arrow-link:hover { text-decoration: underline; }
+
+/* ---------- En bref ---------- */
+.hero-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: 24px; align-items: start; }
+.brief { display: grid; gap: 10px; padding: 20px 22px; background: var(--surface); border: 1px solid var(--line); border-radius: 4px; }
+.brief dl { margin: 0; display: grid; }
+.brief dl > div { display: grid; gap: 2px; padding: 10px 0; border-top: 1px solid var(--line); }
+.brief dt { font-size: .72rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+.brief dd { margin: 0; font-size: var(--s-sm); }
+
+/* ---------- Parcours ---------- */
+.path-wrap { display: grid; gap: 16px; padding-top: 8px; }
+.path-intro { display: grid; gap: 4px; }
+.path-intro p { color: var(--muted); font-size: var(--s-sm); }
+.path { --g: 16px; list-style: none; margin: 0; padding: 0; position: relative; display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--g); }
+.path::before { content: ""; position: absolute; left: 15px; top: 16px; bottom: 16px; width: 2px; background: var(--line); }
+.path-step { position: relative; display: grid; grid-template-columns: 32px minmax(0, 1fr); gap: 14px; align-items: start; }
+.path-marker {
+  position: relative; z-index: 1;
+  width: 32px; height: 32px; border-radius: 50%;
+  display: grid; place-items: center;
+  font-size: var(--s-sm); font-weight: 600; color: var(--muted);
+  background: var(--bg); border: 2px dashed var(--line);
+}
+.path-step.is-current .path-marker { color: var(--blue); background: var(--tint); border: 2px solid var(--blue); }
+.path-card { display: grid; gap: 10px; align-content: start; padding: 18px 20px; border: 1px dashed var(--line); border-radius: 4px; }
+.path-step.is-current .path-card { background: var(--surface); border: 1px solid var(--blue); box-shadow: 0 8px 20px rgba(20, 33, 58, .07); }
+.path-badge { justify-self: start; font-size: .72rem; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+.path-step.is-current .path-badge { color: var(--blue); background: var(--tint); padding: 3px 8px; border-radius: 3px; }
+.path-card h3 { font-size: var(--s-lg); }
+.path-card dl { display: grid; gap: 8px; margin: 0; }
+.path-card dt { font-size: .72rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+.path-card dd { margin: 1px 0 0; font-size: var(--s-sm); }
+.path-step:not(.is-current) .path-card dd { color: var(--muted); }
+
+/* ---------- Couverture des données ---------- */
+.data-wrap { display: grid; gap: 16px; }
+.coverage { display: grid; gap: 14px; padding: 20px 22px; background: var(--surface); border: 1px solid var(--line); border-radius: 4px; }
+.cov-top { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 12px; }
+.cov-head { display: grid; gap: 2px; }
+.cov-num { font-size: 1.1rem; color: var(--muted); font-variant-numeric: tabular-nums; }
+.cov-num strong { font-size: 2rem; font-weight: 600; color: var(--blue); }
+.cov-actions { display: flex; flex-wrap: wrap; gap: 8px; }
+.cov-bar { height: 8px; background: var(--tint); border-radius: 4px; overflow: hidden; }
+.cov-bar span { display: block; height: 100%; width: 15.6%; background: var(--blue); transition: width .25s ease; }
+.cov-note { font-size: var(--s-sm); color: var(--muted); }
+.cov-domains { list-style: none; display: grid; grid-template-columns: minmax(0, 1fr); gap: 2px 24px; font-size: var(--s-sm); border-top: 1px solid var(--line); padding-top: 10px; }
+.cov-domains li { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 4px 0; }
+.pip-wrap { display: inline-flex; align-items: center; gap: 8px; flex: none; }
+.pips { display: inline-flex; gap: 3px; }
+.pips i { width: 14px; height: 6px; border-radius: 1px; background: var(--line); }
+.pips i.on { background: var(--blue); }
+.pip-count { font-size: .75rem; color: var(--muted); font-variant-numeric: tabular-nums; min-width: 2.2em; text-align: right; }
+.cov-sticky { margin: 0; }
+@media (prefers-reduced-motion: reduce) { .cov-bar span { transition: none; } }
+
+/* ---------- Écrans plus larges ---------- */
+@media (min-width: 720px) {
+  .domains, .horizon, .team { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .deal { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .deal > div + div { border-top: 0; border-left: 1px solid var(--line); }
+  .prow { grid-template-columns: 9.5rem minmax(0, 1fr) minmax(0, 1fr); gap: 20px; align-items: baseline; }
+  .prow.head { display: grid; padding-block: 12px; background: var(--tint); }
+  .prow.head span { font-size: .72rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+}
+@media (min-width: 720px) {
+  .cov-domains { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (min-width: 900px) {
+  .hero-grid { grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr); gap: 40px; }
+  .path { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .path::before { left: 16px; right: calc((100% - 2 * var(--g)) / 3 - 16px); top: 15px; bottom: auto; width: auto; height: 2px; }
+  .path-step { grid-template-columns: minmax(0, 1fr); grid-template-rows: auto 1fr; }
+  .cov-domains { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .sim { grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); }
+  .summary-holder { position: sticky; top: calc(env(safe-area-inset-top, 0px) + 64px); }
+  .sim-sticky { display: none; }
+  .resale { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+  .tiers, .horizon, .team { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .person { grid-template-columns: minmax(0, 1fr); }
+  .avatar { grid-row: auto; margin-bottom: 8px; }
+}
+@media (max-width: 480px) {
+  .stat { padding-right: 10px; }
+  .stat + .stat { padding-left: 12px; }
+  .stat-label { font-size: var(--s-xs); }
+}
+@media (prefers-reduced-motion: no-preference) {
+  html { scroll-behavior: smooth; }
+}
+@page { size: A4; margin: 14mm 12mm; }
+@media print {
+  * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  html { font-size: 12.5px; }
+  .section-head { break-inside: avoid; break-after: avoid; }
+  .topnav, .btn, .sim-sticky, .cov-actions, input[type="range"], body::before { display: none !important; }
+  .wrap { gap: 28px; padding-block: 0; }
+  .domain, .tier, .person, .step, .prow, .criteria li, .path-step, .brief, .summary, .coverage, .deal > div, .level { break-inside: avoid; }
+  h2, h3 { break-after: avoid; }
+  .summary-holder { position: static; }
+  .path-step.is-current .path-card { box-shadow: none; }
+  :root { --bg: #ffffff; }
+  body { background: #ffffff; }
+  .wrap, .section, .hero { display: block; }
+  .wrap > * + * { margin-top: 30px; }
+  .section > * + *, .hero > * + * { margin-top: 16px; }
+  .domains, .tiers, .team, .horizon { grid-template-columns: minmax(0, 1fr) !important; }
+  .path { grid-template-columns: minmax(0, 1fr) !important; }
+  .path::before { display: none; }
+  .path-step { grid-template-columns: 32px minmax(0, 1fr) !important; grid-template-rows: auto !important; }
+  .hero-grid, .sim, .resale { grid-template-columns: minmax(0, 1fr) !important; }
+}
+</style>
+</head>
+<body>
+<nav class="topnav" aria-label="Sections">
+  <div class="topnav-in">
+    <a class="topnav-brand" href="#top">La Royale</a>
+    <div class="topnav-links" id="topnav-links">
+      <a href="#methode">Parcours</a>
+      <a href="#profil">Profil</a>
+      <a href="#domaines">Leviers</a>
+      <a href="#estimation">Estimation</a>
+      <a href="#valeur">Valeur</a>
+      <a href="#deroulement">Déroulement</a>
+      <a href="#donnees">Données</a>
+      <a href="#conditions">Conditions</a>
+      <a href="#equipe">Équipe</a>
+    </div>
+  </div>
+</nav>
+
+<div class="wrap">
+
+  <!-- Ouverture -->
+  <header class="hero" id="top">
+    <div class="masthead">
+      <div class="mast-id"><span class="mast-meta">Bar-tabac La Royale · 2 place de la Chapelle, 75018 Paris</span></div>
+      <span class="mast-date">Octobre 2026</span>
+    </div>
+    <div class="hero-grid">
+      <div class="hero-text">
+        <span class="eyebrow">Proposition d'accompagnement</span>
+        <h1>Analyse des charges, des marges et du financement de La&nbsp;Royale</h1>
+        <p class="lead">L'exploitation reste votre domaine. Notre intervention porte sur l'analyse financière, contractuelle et fiscale de l'établissement : charges, marges, financement et valeur de cession.</p>
+        <p class="byline">Proposition établie par <strong>Matthieu Jacques</strong>, avec Ophélie Deschaux et Nathan Smaniotto.</p>
+      </div>
+      <aside class="brief" aria-label="En bref">
+        <span class="label">En bref</span>
+        <dl>
+          <div><dt>Ce document</dt><dd>Étude préliminaire, établie sur données publiques et ratios du secteur.</dd></div>
+          <div><dt>Étape suivante</dt><dd>Étude approfondie sur vos données : sans frais, en 2 à 3 semaines.</dd></div>
+          <div><dt>Accompagnement</dt><dd>25 % des gains mesurés, uniquement en cas de résultat.</dd></div>
+        </dl>
+        <a class="arrow-link" href="#methode">Voir le parcours proposé</a>
+      </aside>
+    </div>
+    <div class="stats">
+      <div class="stat"><span class="stat-value">8</span><span class="stat-label">domaines d'analyse</span></div>
+      <div class="stat"><span class="stat-value">32</span><span class="stat-label">leviers identifiés</span></div>
+      <div class="stat"><span class="stat-value">0&nbsp;€</span><span class="stat-label">d'engagement</span></div>
+    </div>
+  </header>
+
+  <!-- Méthode -->
+  <section class="section" id="methode" aria-labelledby="methode-h">
+    <div class="section-head">
+      <span class="eyebrow">Méthode et parcours</span>
+      <h2 id="methode-h">Une démarche standard du secteur, appliquée à La Royale</h2>
+      <p>Cette méthode est celle employée couramment pour améliorer la rentabilité des cafés, bars et bars-tabacs. Elle repose sur quatre principes.</p>
+    </div>
+    <ol class="principles">
+      <li><div><strong>Partir des chiffres réels.</strong> <span>Comptes annuels, ventes de caisse, factures et contrats.</span></div></li>
+      <li><div><strong>Comparer chaque poste aux ratios de référence.</strong> <span>Coût matière, masse salariale, énergie, frais bancaires : chaque écart est un levier potentiel.</span></div></li>
+      <li><div><strong>Mettre chaque contrat en concurrence.</strong> <span>À garanties et qualité égales, avec des devis comparables.</span></div></li>
+      <li><div><strong>Mesurer chaque gain.</strong> <span>Avant et après, sur facture ou en caisse, levier par levier.</span></div></li>
+    </ol>
+    <div class="path-wrap">
+      <div class="path-intro">
+        <h3>Parcours proposé</h3>
+        <p>Trois niveaux d'intervention, chacun engagé sur votre décision.</p>
+      </div>
+      <ol class="path">
+        <li class="path-step is-current" aria-current="step">
+          <span class="path-marker" aria-hidden="true"><svg viewBox="0 0 16 16" width="14" height="14" focusable="false"><path d="M3 8.5l3.2 3L13 4.5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          <div class="path-card">
+            <span class="path-badge">Vous êtes ici · ce document</span>
+            <h3>Étude préliminaire</h3>
+            <dl>
+              <div><dt>Sources</dt><dd>Données publiques et ratios moyens du secteur.</dd></div>
+              <div><dt>Livrable</dt><dd>Profil de l'établissement, 32 leviers applicables, ordres de grandeur.</dd></div>
+              <div><dt>Conditions</dt><dd>Remise sans frais.</dd></div>
+            </dl>
+          </div>
+        </li>
+        <li class="path-step">
+          <span class="path-marker" aria-hidden="true">2</span>
+          <div class="path-card">
+            <span class="path-badge">Étape suivante</span>
+            <h3>Étude approfondie</h3>
+            <dl>
+              <div><dt>Sources</dt><dd>Vos comptes, exports de caisse, factures, contrats et relevés de commissions.</dd></div>
+              <div><dt>Livrable</dt><dd>Gains chiffrés levier par levier et plan d'action priorisé.</dd></div>
+              <div><dt>Conditions</dt><dd>Sans frais, en 2 à 3 semaines.</dd></div>
+            </dl>
+            <a class="arrow-link" href="#donnees">Données nécessaires</a>
+          </div>
+        </li>
+        <li class="path-step">
+          <span class="path-marker" aria-hidden="true">3</span>
+          <div class="path-card">
+            <span class="path-badge">Sur votre décision</span>
+            <h3>Accompagnement avancé</h3>
+            <dl>
+              <div><dt>Contenu</dt><dd>Mise en œuvre (comparatifs, devis, renégociations, démarches) et suivi mensuel.</dd></div>
+              <div><dt>Livrable</dt><dd>Tableau de bord mensuel, gains mesurés avant et après.</dd></div>
+              <div><dt>Conditions</dt><dd>25 % des gains constatés, pendant 12 mois par levier.</dd></div>
+            </dl>
+            <a class="arrow-link" href="#conditions">Conditions</a>
+          </div>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- Profil -->
+  <section class="section" id="profil" aria-labelledby="profil-h">
+    <div class="section-head">
+      <span class="eyebrow">Étude préliminaire</span>
+      <h2 id="profil-h">Profil de l'établissement</h2>
+      <p>Synthèse des informations publiques disponibles. Les comptes de l'établissement n'étant pas publiés, aucune donnée financière n'est intégrée à ce stade.</p>
+    </div>
+    <div class="profile">
+      <div class="prow head" aria-hidden="true"><span>Élément</span><span>Donnée publique</span><span>Lecture</span></div>
+      <div class="prow">
+        <span class="p-label">Structure</span>
+        <span class="p-fact">SNC familiale, exploitation depuis février 2022.</span>
+        <span class="p-read">Comptes non publiés. Prêt d'acquisition en cours, horizon de cession vers 2032.</span>
+      </div>
+      <div class="prow">
+        <span class="p-label">Activité</span>
+        <span class="p-fact">Activité principale déclarée : tabac. Bar, PMU, point Nickel et CBD en complément.</span>
+        <span class="p-read">Remise brute fixée à 10,29 % du prix de vente (8,35 % nets) jusqu'au terme du protocole 2023-2027 ; volumes de cigarettes du réseau en baisse de 8,7 % en 2025. La marge se pilote sur le bar, les services et les charges.</span>
+      </div>
+      <div class="prow">
+        <span class="p-label">Débit de tabac</span>
+        <span class="p-fact">Exploité depuis plus de 3 ans par la SNC.</span>
+        <span class="p-read">La durée minimale pour présenter un successeur aux douanes est atteinte. Le successeur doit être agréé : honorabilité, régularité fiscale et douanière sur 3 ans, formation initiale.</span>
+      </div>
+      <div class="prow">
+        <span class="p-label">Effectif</span>
+        <span class="p-fact">6 à 9 salariés (déclaration 2024).</span>
+        <span class="p-read">La masse salariale est probablement le premier poste de charges. Repère du secteur : moins de 35 % du chiffre d'affaires pour un café-bar.</span>
+      </div>
+      <div class="prow">
+        <span class="p-label">Convention</span>
+        <span class="p-fact">IDCC 1539 déclarée (commerce de détail de papeterie et librairie).</span>
+        <span class="p-read">Atypique pour un bar-tabac : la convention HCR (IDCC 1979) vise expressément les cafés-tabacs. La convention applicable dépend de l'activité principale réelle (art. L2261-2 du Code du travail). Point à sécuriser.</span>
+      </div>
+      <div class="prow">
+        <span class="p-label">Horaires</span>
+        <span class="p-fact">Bar et PMU jusqu'à 20 h, tabac jusqu'à 21 h 30.</span>
+        <span class="p-read">La rentabilité de chaque tranche horaire se mesure avec les ventes de caisse par heure.</span>
+      </div>
+      <div class="prow">
+        <span class="p-label">Terrasse</span>
+        <span class="p-fact">Terrasse ouverte autorisée de 6,8 m × 1,5 m, soit environ 10 m².</span>
+        <span class="p-read">Redevance annuelle de l'ordre de 220 à 1 260 € selon la catégorie de la voie.</span>
+      </div>
+      <div class="prow">
+        <span class="p-label">Emplacement</span>
+        <span class="p-fact">Place de la Chapelle, métro La Chapelle (ligne 2), en correspondance avec la gare du Nord.</span>
+        <span class="p-read">Flux de passage élevé : la visibilité, en façade comme en ligne, pèse autant que la clientèle d'habitués.</span>
+      </div>
+      <div class="prow">
+        <span class="p-label">Avis en ligne</span>
+        <span class="p-fact">3,8/5 sur 64 avis Google, pas de site web. Les avis reçoivent des réponses.</span>
+        <span class="p-read">Une étude de Harvard associe une étoile supplémentaire à 5 à 9 % de chiffre d'affaires en plus pour un établissement indépendant.</span>
+      </div>
+    </div>
+    <p class="source">Sources : registre national des entreprises (Sirene), Ville de Paris (autorisations de terrasses), fiche Google, douanes, OFDT, consultés le 28 octobre 2026.</p>
+  </section>
+
+  <!-- Domaines -->
+  <section class="section" id="domaines" aria-labelledby="domaines-h">
+    <div class="section-head">
+      <span class="eyebrow">Domaines d'analyse</span>
+      <h2 id="domaines-h">8 domaines, 32 leviers</h2>
+      <p>Pour chaque levier, nous réalisons l'analyse, les comparatifs et les demandes de devis. Aucune décision n'est prise sans votre accord.</p>
+    </div>
+    <div class="domains">
+
+      <article class="domain">
+        <div class="domain-top"><h3>Achats et fournisseurs</h3><span class="domain-who">Ophélie · Matthieu</span></div>
+        <p class="domain-pitch">Réduire le coût matière du bar, à qualité égale.</p>
+        <ul>
+          <li>Contrat brasseur : prix au fût, ristournes, volumes minimum, clause pénale, porte-fort en cas de cession, exclusivité limitée à 10 ans (art. L330-1 du Code de commerce).</li>
+          <li>Comparaison des prix des 20 références les plus vendues auprès de 2 ou 3 grossistes.</li>
+          <li>Coefficient multiplicateur et taux de marque par référence ; cible de coût matière de 18 à 24 % du prix de vente HT sur la pression.</li>
+          <li>Suivi des pertes : rendement des fûts (120 demis théoriques pour un fût de 30 L), casse, offerts.</li>
+        </ul>
+        <div class="meters"><span class="meter">Impact <span class="dots" aria-label="fort"><i class="on"></i><i class="on"></i><i class="on"></i></span></span><span class="meter">Effort <span class="dots" aria-label="moyen"><i class="on"></i><i class="on"></i><i></i></span></span></div>
+      </article>
+
+      <article class="domain" id="d-tabac">
+        <div class="domain-top"><h3>Tabac, jeux et services</h3><span class="domain-who">Nathan · Matthieu</span></div>
+        <p class="domain-pitch">Marge par activité rapportée au temps de comptoir mobilisé, et anticipation de la baisse du tabac.</p>
+        <ul>
+          <li>Rentabilité comparée par activité : remise nette tabac (8,35 %), commissions PMU (1,6 à 2,2 % des enjeux) et FDJ, timbres fiscaux (5 %), Nickel, CBD.</li>
+          <li>Exposition à la baisse des volumes (−12,3 % en 2024, −8,7 % en 2025) et à l'échéance du protocole fin 2027 : part du chiffre d'affaires hors tabac à développer.</li>
+          <li>Aide à la transformation des débits : 30 à 50 % des dépenses HT, plafond 33 000 €, ouverte jusqu'au 31 décembre 2027, une seule fois par débit.</li>
+          <li>Aide à la sécurité : jusqu'à 10 000 € par débit sur 5 ans (coffre, alarme, distributeur sécurisé), sous attestation d'assurance vol.</li>
+        </ul>
+        <div class="meters"><span class="meter">Impact <span class="dots" aria-label="fort"><i class="on"></i><i class="on"></i><i class="on"></i></span></span><span class="meter">Effort <span class="dots" aria-label="moyen"><i class="on"></i><i class="on"></i><i></i></span></span></div>
+      </article>
+
+      <article class="domain">
+        <div class="domain-top"><h3>Ventes et offre du bar</h3><span class="domain-who">Ophélie</span></div>
+        <p class="domain-pitch">Augmenter la marge par client.</p>
+        <ul>
+          <li>Analyse de la carte et des prix : marge par produit, positionnement par rapport aux établissements voisins.</li>
+          <li>Ventes par tranche horaire, pour évaluer les horaires actuels du bar.</li>
+          <li>Offre de restauration aux heures creuses, selon les capacités de la cuisine.</li>
+          <li>Visibilité en ligne : fiche Google complète, collecte d'avis, site minimal.</li>
+        </ul>
+        <div class="meters"><span class="meter">Impact <span class="dots" aria-label="fort"><i class="on"></i><i class="on"></i><i class="on"></i></span></span><span class="meter">Effort <span class="dots" aria-label="moyen"><i class="on"></i><i class="on"></i><i></i></span></span></div>
+      </article>
+
+      <article class="domain">
+        <div class="domain-top"><h3>Banque, financement et paiements</h3><span class="domain-who">Nathan</span></div>
+        <p class="domain-pitch">Réduire le coût du financement et des encaissements.</p>
+        <ul>
+          <li>Prêt en cours : TAEG, durée résiduelle, indemnités de remboursement anticipé, assurance emprunteur, garanties (nantissement, cautions).</li>
+          <li>Commission d'acquisition carte : l'interchange est plafonnée à 0,2 % (débit) et 0,3 % (crédit) par le règlement IFR ; la marge bancaire au-delà est négociable. Enjeu accru sur le tabac, à marge faible.</li>
+          <li>Plan de trésorerie mensuel et BFR : stock de tabac, délais fournisseurs, échéances de TVA.</li>
+          <li>Dossier bancaire à jour pour de futurs projets (travaux, investissement).</li>
+        </ul>
+        <div class="meters"><span class="meter">Impact <span class="dots" aria-label="moyen"><i class="on"></i><i class="on"></i><i></i></span></span><span class="meter">Effort <span class="dots" aria-label="moyen"><i class="on"></i><i class="on"></i><i></i></span></span></div>
+      </article>
+
+      <article class="domain">
+        <div class="domain-top"><h3>Énergie et charges fixes</h3><span class="domain-who">Matthieu</span></div>
+        <p class="domain-pitch">Réduire les charges récurrentes rarement renégociées.</p>
+        <ul>
+          <li>Puissance souscrite (kVA), option tarifaire et part acheminement (TURPE) ; mise en concurrence et comparaison avec le TRVE, ouvert depuis le 1<sup>er</sup> février 2025 aux TPE sans plafond de puissance.</li>
+          <li>Courbe de charge et principaux postes de consommation : froid, tireuse, machine à café, éclairage.</li>
+          <li>Renégociation de l'internet, de la téléphonie et des lignes mobiles.</li>
+          <li>Revue des abonnements : diffusion sportive, Sacem et SPRÉ, logiciels, contrats de maintenance.</li>
+        </ul>
+        <div class="meters"><span class="meter">Impact <span class="dots" aria-label="moyen"><i class="on"></i><i class="on"></i><i></i></span></span><span class="meter">Effort <span class="dots" aria-label="faible"><i class="on"></i><i></i><i></i></span></span></div>
+      </article>
+
+      <article class="domain">
+        <div class="domain-top"><h3>Assurances et sécurité</h3><span class="domain-who">Nathan</span></div>
+        <p class="domain-pitch">Ajuster les garanties aux risques réels, au juste prix.</p>
+        <ul>
+          <li>Revue de la multirisque : garanties, franchises, valeur déclarée du stock de tabac (une sous-déclaration entraîne l'application de la règle proportionnelle).</li>
+          <li>Mise en concurrence de 3 ou 4 assureurs et courtiers, à garanties égales.</li>
+          <li>Perte d'exploitation : durée et montant couverts en cas de fermeture.</li>
+          <li>Prévoyance des associés et assurance du prêt.</li>
+        </ul>
+        <div class="meters"><span class="meter">Impact <span class="dots" aria-label="moyen"><i class="on"></i><i class="on"></i><i></i></span></span><span class="meter">Effort <span class="dots" aria-label="faible"><i class="on"></i><i></i><i></i></span></span></div>
+      </article>
+
+      <article class="domain">
+        <div class="domain-top"><h3>Équipe et organisation</h3><span class="domain-who">Matthieu</span></div>
+        <p class="domain-pitch">Adapter l'organisation à l'activité réelle.</p>
+        <ul>
+          <li>Ratio frais de personnel / chiffre d'affaires et planning comparé à l'affluence horaire relevée en caisse.</li>
+          <li>Allègements et aides : réduction générale dégressive unique (RGDU) depuis le 1<sup>er</sup> janvier 2026, aide à l'apprentissage jusqu'à 5 000 € pour un contrat débutant avant le 1<sup>er</sup> janvier 2027.</li>
+          <li>Convention collective : IDCC 1539 déclarée, alors que la convention HCR (IDCC 1979) couvre les cafés-tabacs. Analyse du risque et de l'écart de coût.</li>
+          <li>Outils simples : inventaire hebdomadaire, suivi des offerts, procédures d'ouverture et de fermeture.</li>
+        </ul>
+        <div class="meters"><span class="meter">Impact <span class="dots" aria-label="moyen"><i class="on"></i><i class="on"></i><i></i></span></span><span class="meter">Effort <span class="dots" aria-label="moyen"><i class="on"></i><i class="on"></i><i></i></span></span></div>
+      </article>
+
+      <article class="domain">
+        <div class="domain-top"><h3>Administratif et conformité</h3><span class="domain-who">Nathan · Matthieu</span></div>
+        <p class="domain-pitch">Sécuriser l'exploitation et préparer une éventuelle cession.</p>
+        <ul>
+          <li>TVA : ventilation 20 / 10 / 5,5 % par code article en caisse ; caisse certifiée NF525.</li>
+          <li>Bail commercial : durée résiduelle, indexation ILC, clause de destination, droit au renouvellement.</li>
+          <li>Terrasse : catégorie de voie et redevance ; les terrasses estivales ne sont pas cessibles avec le fonds.</li>
+          <li>Tabac : vente aux mineurs passible d'une contravention de 5<sup>e</sup> classe depuis juin 2025 et de la perte des soutiens ; formation continue avant renouvellement du contrat de gérance.</li>
+        </ul>
+        <div class="meters"><span class="meter">Impact <span class="dots" aria-label="moyen"><i class="on"></i><i class="on"></i><i></i></span></span><span class="meter">Effort <span class="dots" aria-label="faible"><i class="on"></i><i></i><i></i></span></span></div>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- Estimation -->
+  <section class="section" id="estimation" aria-labelledby="sim-h">
+    <div class="section-head">
+      <span class="eyebrow">Estimation</span>
+      <h2 id="sim-h">Estimation indicative des gains</h2>
+      <p>Hypothèses prudentes, fondées sur les ratios moyens du secteur et limitées au bar et aux charges. La partie tabac, jeux et services sera chiffrée à partir des remises et commissions réelles lors de l'étude approfondie.</p>
+    </div>
+    <div class="sim">
+      <form class="controls" id="sim-form" aria-label="Paramètres de l'estimation">
+        <div class="ca-box">
+          <label for="ca">Chiffre d'affaires annuel HT du bar (hypothèse)</label>
+          <span class="ca-value num" id="ca-out">400 000 €</span>
+          <input type="range" id="ca" min="150000" max="1200000" step="10000" value="400000">
+          <p class="lever-note">Boissons et restauration, hors tabac, jeux et services.</p>
+        </div>
+
+        <div class="lever">
+          <div class="lever-head"><label for="r-achats">Achats boissons et food</label><output id="o-achats" for="r-achats">−4 %</output></div>
+          <input type="range" id="r-achats" min="0" max="10" step="1" value="4">
+          <p class="lever-note">Prix d'achat et pertes. Base : ≈ <span id="b-achats" class="num">—</span> par an (25 % du chiffre d'affaires du bar).</p>
+        </div>
+        <div class="lever">
+          <div class="lever-head"><label for="r-energie">Énergie</label><output id="o-energie" for="r-energie">−10 %</output></div>
+          <input type="range" id="r-energie" min="0" max="30" step="1" value="10">
+          <p class="lever-note">Base : ≈ <span id="b-energie" class="num">—</span> par an (consommation moyenne d'un café : 27 000 kWh).</p>
+        </div>
+        <div class="lever">
+          <div class="lever-head"><label for="r-assur">Assurances</label><output id="o-assur" for="r-assur">−10 %</output></div>
+          <input type="range" id="r-assur" min="0" max="30" step="1" value="10">
+          <p class="lever-note">Base : ≈ <span id="b-assur" class="num">—</span> par an (multirisque, responsabilité civile, perte d'exploitation).</p>
+        </div>
+        <div class="lever">
+          <div class="lever-head"><label for="r-banque">Banque et commissions carte</label><output id="o-banque" for="r-banque">−20 %</output></div>
+          <input type="range" id="r-banque" min="0" max="40" step="1" value="20">
+          <p class="lever-note">Base : ≈ <span id="b-banque" class="num">—</span> par an (0,6 % du chiffre d'affaires du bar, hors encaissements du tabac).</p>
+        </div>
+        <div class="lever">
+          <div class="lever-head"><label for="r-abos">Abonnements, télécom, services</label><output id="o-abos" for="r-abos">−10 %</output></div>
+          <input type="range" id="r-abos" min="0" max="30" step="1" value="10">
+          <p class="lever-note">Base : ≈ <span id="b-abos" class="num">—</span> par an (diffusion sportive, Sacem et SPRÉ, télécom, maintenance).</p>
+        </div>
+        <div class="lever">
+          <div class="lever-head"><label for="r-ventes">Ventes du bar</label><output id="o-ventes" for="r-ventes">+3 %</output></div>
+          <input type="range" id="r-ventes" min="0" max="10" step="1" value="3">
+          <p class="lever-note">Soit <span id="b-ventes" class="num">—</span> de chiffre d'affaires supplémentaire, dont seule la marge après achats est retenue (70 %).</p>
+        </div>
+        <button type="button" class="btn" id="reset">Revenir aux hypothèses prudentes</button>
+        <div class="sim-sticky" aria-hidden="true"><span>Total estimé / an</span><strong id="s-total">—</strong></div>
+      </form>
+
+      <div class="summary-holder">
+        <div class="summary" role="group" aria-label="Synthèse des gains estimés">
+          <div class="summary-head"><span class="eyebrow">Synthèse</span><span class="summary-sub">Gains annuels estimés, hors tabac et jeux</span></div>
+          <dl class="s-rows">
+            <div class="s-row"><dt>Achats</dt><dd id="t-achats">—</dd></div>
+            <div class="s-row"><dt>Énergie</dt><dd id="t-energie">—</dd></div>
+            <div class="s-row"><dt>Assurances</dt><dd id="t-assur">—</dd></div>
+            <div class="s-row"><dt>Banque et commissions carte</dt><dd id="t-banque">—</dd></div>
+            <div class="s-row"><dt>Abonnements et services</dt><dd id="t-abos">—</dd></div>
+            <div class="s-row"><dt>Marge sur ventes supplémentaires</dt><dd id="t-ventes">—</dd></div>
+          </dl>
+          <div class="s-total" aria-live="polite"><span>Total annuel</span><strong id="t-total">—</strong></div>
+          <dl class="s-rows">
+            <div class="s-row"><dt>Cumul sur 6 ans</dt><dd id="t-six">—</dd></div>
+            <div class="s-row"><dt>Notre rémunération (25 %, 12 mois)</dt><dd id="t-fee">—</dd></div>
+            <div class="s-row strong"><dt>Net pour La Royale sur 6 ans</dt><dd id="t-keep">—</dd></div>
+            <div class="s-row"><dt>Effet sur la valeur de cession</dt><dd id="t-resale">—</dd></div>
+          </dl>
+        </div>
+        <p class="summary-foot">Gains calculés à activité constante, avant impôt. Détail des hypothèses et sources en bas de page.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Valeur -->
+  <section class="section" id="valeur" aria-labelledby="valeur-h">
+    <div class="section-head">
+      <span class="eyebrow">Valeur de l'établissement</span>
+      <h2 id="valeur-h">Critères bancaires de cession</h2>
+      <p>À la cession, l'acheteur et sa banque fondent leur décision sur cinq critères chiffrés. Tous peuvent être améliorés sans modifier le modèle de l'établissement.</p>
+    </div>
+    <ol class="criteria">
+      <li>
+        <h3>EBE retraité</h3>
+        <p>Moyenne et tendance sur les trois derniers exercices, après retraitement de la rémunération normative de l'exploitant, du loyer et des éléments non récurrents. C'est l'assiette du multiple de valorisation.</p>
+      </li>
+      <li>
+        <h3>Capacité de remboursement du repreneur</h3>
+        <p>La banque dimensionne le prêt d'acquisition sur la couverture des annuités par l'EBE. Quotité rarement supérieure à 70 % du prix, durée de 7 ans en général, nantissement du fonds et apport d'au moins 30 %. Le prix finançable est donc plafonné par l'EBE.</p>
+      </li>
+      <li>
+        <h3>Chiffre d'affaires, remises et mix d'activités</h3>
+        <p>Niveau et tendance du chiffre d'affaires du bar, des remises tabac et des commissions (PMU, FDJ, services). Avec la baisse des volumes de tabac (−8,7 % en 2025) et l'échéance du protocole fin 2027, la part du chiffre d'affaires hors tabac pèse dans l'appréciation du risque.</p>
+      </li>
+      <li>
+        <h3>Ratios d'exploitation</h3>
+        <p>Coût matière (cible de 18 à 24 % du prix de vente HT sur la pression), frais de personnel sous 35 % du chiffre d'affaires, loyer sous 10 %, prime cost (matière et personnel) entre 60 et 70 %. Des ratios hors norme réduisent le multiple ou la quotité.</p>
+      </li>
+      <li>
+        <h3>Sécurité juridique et qualité des comptes</h3>
+        <p>Durée résiduelle du bail, loyer, clause de destination et indexation (ILC) ; agrément du successeur par la direction interrégionale des douanes ; convention collective applicable ; licence IV ; caisse certifiée NF525 et cohérence entre caisse, comptabilité et relevés de remises. Un bail à moins de 18 mois de son échéance décote le fonds, un bail récemment renouvelé peut le valoriser de 5 à 15 %.</p>
+      </li>
+    </ol>
+    <div class="resale">
+      <div class="prose">
+        <p><strong>Effet d'un gain d'EBE durable.</strong> Chaque euro d'EBE gagné de façon récurrente est multiplié dans le prix de cession et augmente le montant finançable par la banque du repreneur.</p>
+      </div>
+      <div>
+        <div class="table-scroll">
+          <table class="val">
+            <thead><tr><th scope="col">EBE supplémentaire par an</th><th scope="col">Valeur de cession supplémentaire</th></tr></thead>
+            <tbody>
+              <tr><td>+10 000 €</td><td class="big">+25 000 à 40 000 €</td></tr>
+              <tr><td>+20 000 €</td><td class="big">+50 000 à 80 000 €</td></tr>
+              <tr><td>+30 000 €</td><td class="big">+75 000 à 120 000 €</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="caption" id="valeur-caption">Partie bar : 2,5 à 4 fois l'EBE retraité. Partie tabac : 1 à 4 fois la remise nette annuelle selon les barèmes professionnels. Aucun barème n'est officiel ; à Paris, les prix demandés pour un bar-tabac atteignent 7 à 8 fois les commissions nettes du tabac.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Déroulement -->
+  <section class="section" id="deroulement" aria-labelledby="deroulement-h">
+    <div class="section-head">
+      <span class="eyebrow">Déroulement</span>
+      <h2 id="deroulement-h">Quatre étapes</h2>
+    </div>
+    <ol class="steps">
+      <li class="step">
+        <span class="step-when">1 heure, sur place</span>
+        <h3>Entretien</h3>
+        <p>Présentation de l'établissement, de ses priorités et des contraintes à respecter. Remise des premiers documents.</p>
+      </li>
+      <li class="step">
+        <span class="step-when">Étude approfondie · 2 à 3 semaines, sans frais</span>
+        <h3>Analyse et chiffrage</h3>
+        <p>Analyse des documents, comparaison aux ratios du secteur, chiffrage de chaque levier. Remise d'un rapport avec un plan d'action priorisé.</p>
+      </li>
+      <li class="step">
+        <span class="step-when">Accompagnement · les mois suivants</span>
+        <h3>Mise en œuvre</h3>
+        <p>Comparatifs, demandes de devis, préparation des démarches. Chaque changement est soumis à votre validation avant signature.</p>
+      </li>
+      <li class="step">
+        <span class="step-when">Accompagnement · chaque mois</span>
+        <h3>Suivi</h3>
+        <p>Tableau de bord mensuel : économies réalisées, ventes, marge, trésorerie. Chaque gain est mesuré avant et après.</p>
+      </li>
+    </ol>
+    <div class="horizon">
+      <div>
+        <span class="eyebrow">Sous 30 jours</span>
+        <h3>Charges fixes</h3>
+        <ul>
+          <li>Énergie et télécom mises en concurrence</li>
+          <li>Assurances comparées à garanties égales</li>
+          <li>Commissions carte et frais bancaires renégociés</li>
+          <li>Abonnements revus</li>
+        </ul>
+      </div>
+      <div>
+        <span class="eyebrow">Sous 3 mois</span>
+        <h3>Marges</h3>
+        <ul>
+          <li>Fournisseurs et contrat brasseur revus</li>
+          <li>Carte et prix ajustés</li>
+          <li>Rentabilité par activité établie</li>
+          <li>Inventaire et suivi des pertes en place</li>
+        </ul>
+      </div>
+      <div>
+        <span class="eyebrow">À 6 mois et au-delà</span>
+        <h3>Pilotage</h3>
+        <ul>
+          <li>Tableau de bord mensuel</li>
+          <li>Plan de trésorerie et suivi du prêt</li>
+          <li>Bail et conformité sécurisés</li>
+          <li>Dossier prêt pour la banque ou un repreneur</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Données -->
+  <section class="section" id="donnees" aria-labelledby="donnees-h">
+    <div class="section-head">
+      <span class="eyebrow">Données nécessaires</span>
+      <h2 id="donnees-h">Ce que permet chaque document</h2>
+      <p>L'étude approfondie dépend directement des données transmises. Une photo ou un export suffit pour la plupart des documents. Cochez ceux que vous pouvez fournir pour voir les leviers qu'ils permettent de chiffrer.</p>
+    </div>
+    <div class="data-wrap">
+      <div class="coverage">
+        <div class="cov-top">
+          <div class="cov-head">
+            <span class="label">Leviers chiffrables</span>
+            <div class="cov-num"><strong id="cov-n">5</strong> / 32</div>
+          </div>
+          <div class="cov-actions">
+            <button type="button" class="btn" id="cov-all">Tout sélectionner</button>
+            <button type="button" class="btn" id="cov-reset">Réinitialiser</button>
+          </div>
+        </div>
+        <div class="cov-bar" aria-hidden="true"><span id="cov-fill"></span></div>
+        <p class="cov-note" id="cov-note" aria-live="polite">Sans document, 5 leviers sont analysables à partir des données publiques et de l'entretien. Cochez les documents que vous pouvez transmettre.</p>
+        <ul class="cov-domains" id="cov-domains">
+          <li data-dom="a"><span>Achats</span><span class="pip-wrap"><span class="pips" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span class="pip-count">0/4</span></span></li>
+          <li data-dom="t"><span>Tabac, jeux et services</span><span class="pip-wrap"><span class="pips" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span class="pip-count">0/4</span></span></li>
+          <li data-dom="v"><span>Ventes et offre</span><span class="pip-wrap"><span class="pips" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span class="pip-count">0/4</span></span></li>
+          <li data-dom="b"><span>Banque et paiements</span><span class="pip-wrap"><span class="pips" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span class="pip-count">0/4</span></span></li>
+          <li data-dom="e"><span>Énergie et charges fixes</span><span class="pip-wrap"><span class="pips" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span class="pip-count">0/4</span></span></li>
+          <li data-dom="s"><span>Assurances</span><span class="pip-wrap"><span class="pips" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span class="pip-count">0/4</span></span></li>
+          <li data-dom="q"><span>Équipe</span><span class="pip-wrap"><span class="pips" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span class="pip-count">0/4</span></span></li>
+          <li data-dom="c"><span>Administratif</span><span class="pip-wrap"><span class="pips" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span class="pip-count">0/4</span></span></li>
+        </ul>
+      </div>
+      <div class="tiers">
+      <div class="tier">
+        <div class="tier-head"><span class="tier-time">Niveau 1</span><span class="tier-sub">Charges fixes</span></div>
+        <ul>
+          <li><label class="doc"><input type="checkbox" id="doc-energie" data-levers="e1 e2"><span class="doc-text">Les 2 dernières factures d'électricité et de gaz<span class="unlock">offre et puissance adaptées</span></span></label></li>
+          <li><label class="doc"><input type="checkbox" id="doc-assurance" data-levers="s1 s2 s3"><span class="doc-text">Le contrat d'assurance et le dernier avis d'échéance<span class="unlock">mise en concurrence à garanties égales</span></span></label></li>
+          <li><label class="doc"><input type="checkbox" id="doc-carte" data-levers="b2"><span class="doc-text">Un relevé mensuel des commissions carte et des frais du compte<span class="unlock">renégociation banque et terminal</span></span></label></li>
+          <li><label class="doc"><input type="checkbox" id="doc-telecom" data-levers="e3 e4"><span class="doc-text">Les factures télécom et abonnements<span class="unlock">revue et renégociation</span></span></label></li>
+        </ul>
+      </div>
+      <div class="tier">
+        <div class="tier-head"><span class="tier-time">Niveau 2</span><span class="tier-sub">Marges et ventes</span></div>
+        <ul>
+          <li><label class="doc"><input type="checkbox" id="doc-comptes" data-levers="q1 b3 b4 t2"><span class="doc-text">Les comptes annuels des 2 ou 3 derniers exercices<span class="unlock">rentabilité réelle et ratios</span></span></label></li>
+          <li><label class="doc"><input type="checkbox" id="doc-caisse" data-levers="v1 v2 v3 c1 q1"><span class="doc-text">Un export de caisse par heure et par produit<span class="unlock">affluence, ticket moyen, produits phares</span></span></label></li>
+          <li><label class="doc"><input type="checkbox" id="doc-remises" data-levers="t1 t2 t3"><span class="doc-text">Les relevés de remises tabac et de commissions PMU, FDJ et Nickel<span class="unlock">rentabilité par activité</span></span></label></li>
+          <li><label class="doc"><input type="checkbox" id="doc-fournisseurs" data-levers="a2 a3 a4 v1"><span class="doc-text">2 ou 3 mois de factures fournisseurs et la carte actuelle<span class="unlock">coût matière et marge par produit</span></span></label></li>
+        </ul>
+      </div>
+      <div class="tier">
+        <div class="tier-head"><span class="tier-time">Niveau 3</span><span class="tier-sub">Structure et financement</span></div>
+        <ul>
+          <li><label class="doc"><input type="checkbox" id="doc-bail" data-levers="c2"><span class="doc-text">Le bail commercial<span class="unlock">échéance, loyer, valeur de cession</span></span></label></li>
+          <li><label class="doc"><input type="checkbox" id="doc-brasseur" data-levers="a1"><span class="doc-text">Le contrat brasseur<span class="unlock">marges de négociation</span></span></label></li>
+          <li><label class="doc"><input type="checkbox" id="doc-pret" data-levers="b1 s4"><span class="doc-text">Le tableau d'amortissement du prêt<span class="unlock">trésorerie et options de financement</span></span></label></li>
+          <li><label class="doc"><input type="checkbox" id="doc-plannings" data-levers="q1 q2 q3"><span class="doc-text">Les plannings et la masse salariale<span class="unlock">organisation et aides possibles</span></span></label></li>
+        </ul>
+      </div>
+      </div>
+      <div class="sim-sticky cov-sticky" aria-hidden="true"><span>Leviers chiffrables</span><strong><span id="cov-n2">5</span> / 32</strong></div>
+    </div>
+    <div class="privacy">
+      <h3>Confidentialité</h3>
+      <ul class="ticks">
+        <li>Engagement de confidentialité signé avant toute transmission, si vous le souhaitez.</li>
+        <li>Accès limité à Matthieu, Ophélie et Nathan ; seules les données utiles à l'analyse sont conservées.</li>
+        <li>Restitution ou suppression de l'ensemble des données sur simple demande.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Conditions -->
+  <section class="section" id="conditions" aria-labelledby="conditions-h">
+    <div class="section-head">
+      <span class="eyebrow">Conditions</span>
+      <h2 id="conditions-h">Une rémunération indexée sur les résultats</h2>
+      <p>Les gains sont mesurés sur facture ou en caisse, avant et après chaque action.</p>
+    </div>
+    <div class="deal">
+      <div>
+        <span class="deal-k">Étude approfondie</span>
+        <span class="deal-v">Sans frais</span>
+        <p>Entretien, analyse et rapport chiffré, sans engagement.</p>
+      </div>
+      <div>
+        <span class="deal-k">Accompagnement avancé</span>
+        <span class="deal-v">25 % des gains</span>
+        <p>Sur les économies et la marge supplémentaire effectivement constatées, pendant les 12 premiers mois de chaque levier. Au-delà, l'intégralité des gains revient à La Royale.</p>
+      </div>
+      <div>
+        <span class="deal-k">Sans résultat</span>
+        <span class="deal-v">0 €</span>
+        <p>Aucun gain mesuré, aucune facturation.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Équipe -->
+  <section class="section" id="equipe" aria-labelledby="equipe-h">
+    <div class="section-head">
+      <span class="eyebrow">Équipe</span>
+      <h2 id="equipe-h">Interlocuteurs</h2>
+    </div>
+    <div class="team">
+      <div class="person">
+        <span class="avatar" aria-hidden="true">MJ</span>
+        <h3>Matthieu Jacques</h3>
+        <span class="person-role">Ingénieur Data &amp; Machine Learning</span>
+        <p>Interlocuteur principal. Coordonne le diagnostic, exploite les données de caisse et de comptabilité et met en place le tableau de bord de suivi.</p>
+      </div>
+      <div class="person">
+        <span class="avatar" aria-hidden="true">OD</span>
+        <h3>Ophélie Deschaux</h3>
+        <span class="person-role">Entrepreneuse en commerce de détail, spécialiste achat-revente et pricing</span>
+        <p>Ingénieure informatique de formation. Prend en charge la carte et les prix, les achats fournisseurs et la visibilité de l'établissement.</p>
+      </div>
+      <div class="person">
+        <span class="avatar" aria-hidden="true">NS</span>
+        <h3>Nathan Smaniotto</h3>
+        <span class="person-role">Ingénieur du secteur bancaire</span>
+        <p>Prend en charge le prêt, les frais bancaires, les encaissements et les assurances.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Prochaine étape -->
+  <section class="closing" aria-labelledby="fin-h">
+    <span class="eyebrow">Prochaine étape</span>
+    <h2 id="fin-h">Lancer l'étude approfondie</h2>
+    <p>Un entretien d'une heure à La Royale, à la date de votre choix. Si possible, avec trois documents : une facture d'électricité, le contrat d'assurance et un relevé des commissions carte. Un premier chiffrage est remis sous deux semaines.</p>
+    <p class="sign">Matthieu Jacques, avec Ophélie Deschaux et Nathan Smaniotto</p>
+  </section>
+
+  <footer>
+    <p><strong>Hypothèses.</strong> Les montants de cette page sont des ordres de grandeur calculés à partir de moyennes du secteur des cafés-bars en France. Ils ne reflètent pas les comptes de La Royale et seront remplacés par les chiffres réels lors de l'étude approfondie. Les économies sur l'énergie, les assurances et la banque dépendent des contrats en place et seront chiffrées sur devis.</p>
+    <p><strong>Sources</strong></p>
+    <ul id="sources">
+      <li>Établissement : <a href="https://annuaire-entreprises.data.gouv.fr/" target="_blank" rel="noopener">Annuaire des entreprises (Sirene)</a>, <a href="https://opendata.paris.fr/explore/dataset/terrasses-autorisations/" target="_blank" rel="noopener">Ville de Paris, autorisations de terrasses</a>, fiche Google, consultés le 28 octobre 2026</li>
+      <li>Coût matière boissons 18 à 24 %, food 25 à 35 % du prix HT : <a href="https://hayot-expertise.fr/blog/beverage-cost-bar-calcul-pilotage-2026" target="_blank" rel="noopener">Hayot Expertise</a>, <a href="https://www.keobiz.fr/fiches-pratiques/food-cost-beverage-cost-marges/" target="_blank" rel="noopener">Keobiz</a> ; masse salariale d'un café-bar : <a href="https://hayot-expertise.fr/secteurs/expert-comptable-cafe-bar" target="_blank" rel="noopener">Hayot Expertise</a></li>
+      <li>Énergie d'un café : ≈ 27 000 kWh et ≈ 4 900 € HT par an (moyenne ADEME), portés à 6 000 € pour tenir compte des hausses : <a href="https://opera-energie.com/consommation-electricite-bar/" target="_blank" rel="noopener">Opéra Énergie</a> ; accès au tarif réglementé : <a href="https://www.edf.fr/entreprises/electricite-gaz/tarifs-reglementes/acces-aux-tarifs-reglementes-de-vente" target="_blank" rel="noopener">EDF</a></li>
+      <li>Multirisque restaurant 1 200 à 2 000 € par an : <a href="https://www.france-epargne.fr/academy/assurances-professionnelles/combien-coute-une-assurance-pour-restaurant-ou-hotel-en-2025" target="_blank" rel="noopener">France Épargne</a></li>
+      <li>Commissions carte 0,4 à 0,8 %, terminal 20 à 40 € HT par mois : <a href="https://www.keobiz.fr/fiches-pratiques/terminal-paiement-tpe-commerce/" target="_blank" rel="noopener">Keobiz</a> ; part imposée (interchange) : <a href="https://www.generali.fr/professionnel/actu/negocier-taux-commission-carte-bancaire/" target="_blank" rel="noopener">Generali</a></li>
+      <li>SPRÉ et Sacem : <a href="https://www.ghr.fr/reglementation-fiscalite/la-sacem-et-la-spre/la-spre" target="_blank" rel="noopener">GHR</a> ; contrat brasseur : <a href="https://www.weblex.fr/fiches-conseils/avantages-obligations-contrat-brasseur" target="_blank" rel="noopener">WebLex</a> ; TVA : <a href="https://bofip.impots.gouv.fr/bofip/256-PGP.html/identifiant=BOI-TVA-LIQ-30-20-10-20-20240807" target="_blank" rel="noopener">BOFiP</a></li>
+      <li>Redevance terrasse 2025 : <a href="https://cdn.paris.fr/paris/2025/07/04/arrete-tarifaire-01072025-bovp-Lhx4.pdf" target="_blank" rel="noopener">Ville de Paris</a></li>
+      <li>Valorisation d'un café-bar et d'un tabac, effet du bail : <a href="https://hayot-expertise.fr/blog/bareme-evaluation-fonds-de-commerce" target="_blank" rel="noopener">Hayot Expertise</a> ; prime cost d'un bar : <a href="https://hayot-expertise.fr/secteurs/expert-comptable-cafe-bar" target="_blank" rel="noopener">Hayot Expertise</a></li>
+      <li>Remise des débitants de tabac : <a href="https://www.douane.gouv.fr/fiche/remuneration-des-debitants-de-tabac" target="_blank" rel="noopener">douane.gouv.fr</a> ; volumes 2024-2025 (OFDT) : <a href="https://www.cbnews.fr/node/101206" target="_blank" rel="noopener">CB News</a> ; aides à la transformation et à la sécurité : <a href="https://www.douane.gouv.fr/fiche/aide-la-transformation-des-debits-de-tabac" target="_blank" rel="noopener">douane.gouv.fr</a>, <a href="https://www.douane.gouv.fr/fiche/aide-la-securite-des-debits-de-tabac" target="_blank" rel="noopener">douane.gouv.fr</a></li>
+      <li>Présentation d'un successeur et obligations du débitant : <a href="https://entreprendre.service-public.gouv.fr/vosdroits/F23604" target="_blank" rel="noopener">service-public.gouv.fr</a> ; vente aux mineurs : <a href="https://www.legifrance.gouv.fr/jorf/id/JORFTEXT000051806161" target="_blank" rel="noopener">Légifrance</a></li>
+      <li>Conventions collectives : <a href="https://code.travail.gouv.fr/convention-collective/1539-papeterie-commerce-de-detail-de-papeterie-fournitures-de-bureau-bureaut" target="_blank" rel="noopener">IDCC 1539</a>, <a href="https://www.juritravail.com/convention-collective/brochure-3292/hotels-cafes-restaurants-restaurant-tourisme-hotel-de-prefecture-cafes-tabacs.html" target="_blank" rel="noopener">HCR, IDCC 1979</a> ; commissions PMU et FDJ : <a href="https://questions.assemblee-nationale.fr/dyn/14/questions/QANR5L14QE17135.pdf" target="_blank" rel="noopener">Assemblée nationale</a></li>
+      <li>Valorisation de la partie tabac : <a href="https://www.fiducial.fr/Presse-Tabac-Librairie/Comptabilite-presse-tabac-librairie/Diffuseurs-de-presse-vendre-son-fonds-de-commerce-oui-mais-a-quel-prix" target="_blank" rel="noopener">Fiducial</a>, <a href="https://copeps.fr/actualites/appreciation-du-chiffre-d-affaires-d-un-tabac-presse/" target="_blank" rel="noopener">Copeps</a>, <a href="https://www.lesannoncesducommerce.fr/achat-vente-bar-tabac-paris" target="_blank" rel="noopener">annonces parisiennes</a></li>
+      <li>Financement d'une reprise (apport, quotité, durée) : <a href="https://www.solutis.fr/creer-reprendre-bar-tabac-conditions-credit-et-aides.html" target="_blank" rel="noopener">Solutis</a>, <a href="https://www.cnb.avocat.fr/sites/default/files/documents/32.clcs_du_financement.pdf" target="_blank" rel="noopener">Conseil national des barreaux</a></li>
+      <li>Aide à l'embauche d'apprentis 2026 : <a href="https://www.sage.com/fr-fr/blog/aide-embauche-apprentis-2026/" target="_blank" rel="noopener">Sage</a> ; avis en ligne et chiffre d'affaires : <a href="https://harvardmagazine.com/node/33472" target="_blank" rel="noopener">Harvard Magazine</a></li>
+    </ul>
+  </footer>
+
+</div>
+
+<script>
+(function () {
+  var eur = new Intl.NumberFormat("fr-FR", { style: "currency", currency: "EUR", maximumFractionDigits: 0 });
+  var round = function (v) { return Math.round(v / 50) * 50; };
+
+  // share : part du CA servant de base au levier ; fixed : montant annuel indépendant du CA ;
+  // pour "ventes", seule la marge sur le CA en plus est comptée.
+  var levers = [
+    { id: "achats", share: 0.25, def: 4, sign: "−" },
+    { id: "energie", fixed: 6000, def: 10, sign: "−" },
+    { id: "assur", fixed: 2500, def: 10, sign: "−" },
+    { id: "banque", share: 0.006, def: 20, sign: "−" },
+    { id: "abos", fixed: 5000, def: 10, sign: "−" },
+    { id: "ventes", margin: 0.70, def: 3, sign: "+" }
+  ];
+  var CA_DEFAULT = 400000;
+  var FEE = 0.25, YEARS = 6, MULT_LOW = 2.5, MULT_HIGH = 4;
+
+  var $ = function (id) { return document.getElementById(id); };
+  var caInput = $("ca");
+
+  function update() {
+    var ca = Number(caInput.value) || 0;
+    $("ca-out").textContent = eur.format(ca);
+    var total = 0;
+    levers.forEach(function (l) {
+      var pct = Number($("r-" + l.id).value) / 100;
+      var gain, base;
+      if (l.id === "ventes") {
+        base = ca * pct;
+        gain = base * l.margin;
+      } else {
+        base = l.fixed != null ? l.fixed : ca * l.share;
+        gain = base * pct;
+      }
+      total += gain;
+      $("o-" + l.id).textContent = l.sign + Math.round(pct * 100) + " %";
+      $("b-" + l.id).textContent = eur.format(round(base));
+      $("t-" + l.id).textContent = eur.format(round(gain));
+    });
+    var six = total * YEARS;
+    var fee = total * FEE;
+    $("t-total").textContent = eur.format(round(total));
+    $("s-total").textContent = eur.format(round(total));
+    $("t-six").textContent = eur.format(round(six));
+    $("t-fee").textContent = "− " + eur.format(round(fee));
+    $("t-keep").textContent = eur.format(round(six - fee));
+    $("t-resale").textContent = total > 0
+      ? "+" + eur.format(Math.round(total * MULT_LOW / 1000) * 1000) + " à " + eur.format(Math.round(total * MULT_HIGH / 1000) * 1000)
+      : eur.format(0);
+  }
+
+  $("sim-form").addEventListener("input", update);
+  $("sim-form").addEventListener("submit", function (e) { e.preventDefault(); });
+  $("reset").addEventListener("click", function () {
+    caInput.value = CA_DEFAULT;
+    levers.forEach(function (l) { $("r-" + l.id).value = l.def; });
+    update();
+  });
+  update();
+})();
+</script>
+
+<script>
+(function () {
+  // Navigation : surligne la section en cours de lecture.
+  var box = document.getElementById("topnav-links");
+  var links = Array.prototype.slice.call(box.querySelectorAll("a"));
+  var current = null;
+  function setActive(id) {
+    if (id === current) return;
+    current = id;
+    links.forEach(function (a) {
+      var on = a.getAttribute("href") === "#" + id;
+      if (on) {
+        a.setAttribute("aria-current", "true");
+        if (a.offsetLeft < box.scrollLeft || a.offsetLeft + a.offsetWidth > box.scrollLeft + box.clientWidth) {
+          box.scrollTo({ left: Math.max(0, a.offsetLeft - 16), behavior: "smooth" });
+        }
+      } else {
+        a.removeAttribute("aria-current");
+      }
+    });
+  }
+  function onScroll() {
+    var active = null;
+    links.forEach(function (a) {
+      var sec = document.getElementById(a.getAttribute("href").slice(1));
+      if (sec && sec.getBoundingClientRect().top <= 96) active = sec.id;
+    });
+    setActive(active);
+  }
+  window.addEventListener("scroll", onScroll, { passive: true });
+  onScroll();
+})();
+
+(function () {
+  // Documents cochés → leviers chiffrables (lettre = domaine, chiffre = levier de la carte).
+  var TOTAL = 32;
+  var BASE = ["v4", "c3", "c4", "t4", "q4"];
+  var DOMAINS = ["a", "t", "v", "b", "e", "s", "q", "c"];
+  var KEY = "la-royale-documents";
+  var $ = function (id) { return document.getElementById(id); };
+  var boxes = Array.prototype.slice.call(document.querySelectorAll(".doc input"));
+
+  function save() {
+    try { localStorage.setItem(KEY, JSON.stringify(boxes.filter(function (b) { return b.checked; }).map(function (b) { return b.id; }))); } catch (e) {}
+  }
+  function load() {
+    try {
+      var ids = JSON.parse(localStorage.getItem(KEY) || "[]");
+      boxes.forEach(function (b) { b.checked = ids.indexOf(b.id) !== -1; });
+    } catch (e) {}
+  }
+  function update() {
+    var set = {};
+    BASE.forEach(function (l) { set[l] = true; });
+    var docs = 0;
+    boxes.forEach(function (b) {
+      if (!b.checked) return;
+      docs++;
+      b.getAttribute("data-levers").split(" ").forEach(function (l) { set[l] = true; });
+    });
+    var n = Object.keys(set).length;
+    $("cov-n").textContent = n;
+    $("cov-n2").textContent = n;
+    $("cov-fill").style.width = (n / TOTAL * 100).toFixed(1) + "%";
+    DOMAINS.forEach(function (d) {
+      var k = 0;
+      for (var i = 1; i <= 4; i++) if (set[d + i]) k++;
+      var row = document.querySelector('#cov-domains [data-dom="' + d + '"]');
+      Array.prototype.forEach.call(row.querySelectorAll(".pips i"), function (p, i) { p.classList.toggle("on", i < k); });
+      row.querySelector(".pip-count").textContent = k + "/4";
+    });
+    var note;
+    if (docs === 0) note = "Sans document, 5 leviers sont analysables à partir des données publiques et de l'entretien. Cochez les documents que vous pouvez transmettre.";
+    else if (n < TOTAL) note = docs + (docs > 1 ? " documents sélectionnés : " : " document sélectionné : ") + n + " leviers sur 32 peuvent être chiffrés.";
+    else note = "Avec ces documents, l'étude approfondie couvre l'ensemble des 32 leviers.";
+    $("cov-note").textContent = note;
+  }
+
+  boxes.forEach(function (b) { b.addEventListener("change", function () { update(); save(); }); });
+  $("cov-all").addEventListener("click", function () { boxes.forEach(function (b) { b.checked = true; }); update(); save(); });
+  $("cov-reset").addEventListener("click", function () { boxes.forEach(function (b) { b.checked = false; }); update(); save(); });
+  load();
+  update();
+})();
+</script>
+</body>
+</html>
